@@ -1,0 +1,23 @@
+services:
+  caddy:
+    image: slothcroissant/caddy-cloudflaredns:latest
+
+    container_name: caddy
+    restart: unless-stopped
+    environment:
+      - TZ=America/New_York
+      - CLOUDFLARE_EMAIL=me@example.com
+      - CLOUDFLARE_API_TOKEN=my-cloud-flare-token
+      - ACME_AGREE=true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /apps/caddy/caddy-ansible:/etc/caddy/Caddyfile
+      - /apps/caddy/data:/data
+      - /apps/caddy/config:/config
+      - /apps/caddy/logs:/logs
+    networks:
+      - caddy
+networks:
+    caddy:
