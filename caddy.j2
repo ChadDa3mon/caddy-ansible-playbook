@@ -1,0 +1,27 @@
+(standard) {
+  log {
+    output file /logs/logging.txt {
+    }
+    format json
+    level info
+  }
+  tls <Cloudflare email> {
+    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+  }
+}
+(user_auth) {
+  basicauth {
+    {% for user, password in user_data.users.items() %}
+    {{ user }} {{ password }}
+    {% endfor %}
+  }
+}
+
+### Ansible Managed Proxies - Do not modify anything below this line ###
+
+{% for name, details in proxy_data.proxies.items() %}
+https://{{ name }}.{{ top_level_domain }} {
+  reverse_proxy http://{{ details.host }}:{{ details.port }}
+  import standard
+}
+{% endfor %}
