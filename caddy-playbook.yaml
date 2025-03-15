@@ -1,0 +1,37 @@
+---
+- name: Update Caddy Config and Restart Docker Container
+  hosts: local
+  vars:
+    caddy_config_file: "/apps/caddy/caddy-ansible"
+    docker_container_name: "caddy"
+    proxies_file: "proxies.yaml"
+    users_file: "users.yaml"
+    caddy_template: "caddy.j2"
+    top_level_domain: "example.com"  # Change this to customize your domain
+
+  tasks:
+    - name: Load proxy configurations from file
+      include_vars:
+        file: "{{ proxies_file }}"
+        name: proxy_data
+
+    - name: Load user credentials from file
+      include_vars:
+        file: "{{ users_file }}"
+        name: user_data
+
+    - name: Generate Caddy config from Jinja2 template
+      template:
+        src: "{{ caddy_template }}"
+        dest: "{{ caddy_config_file }}"
+        mode: "0644"
+
+    - name: Stop Docker container {{ docker_container_name }}
+      docker_container:
+        name: "{{ docker_container_name }}"
+        state: stopped
+
+    - name: Start Docker container {{ docker_container_name }}
+      docker_container:
+        name: "{{ docker_container_name }}"
+        state: started
