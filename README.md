@@ -8,4 +8,9 @@ Download the files to some folder on your server and modify the `proxies.yaml` a
 
 You will also need to modify the `caddy-playbook.yaml` to change the variables near the top to fit your setup. 
 
+If you want to implement basic auth in front of any proxy, add the flag `require_auth: true` to that proxy in your `proxies.yaml` file (see example in default file). 
+
 When you have everything set, you should be able to run it with `ansible-playbook -i inventory.ini caddy-playbook.yaml`
+
+# Caddy Details
+I am running the latest version of caddy as a docker file, based on the image `slothcroissant/caddy-cloudflaredns:latest`. As of writing, this is `2.9.1`. 
