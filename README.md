@@ -12,5 +12,5 @@ If you want to implement basic auth in front of any proxy, add the flag `require
 
 When you have everything set, you should be able to run it with `ansible-playbook -i inventory.ini caddy-playbook.yaml`
 
-# Caddy Details
-I am running the latest version of caddy as a docker file, based on the image `slothcroissant/caddy-cloudflaredns:latest`. As of writing, this is `2.9.1`. 
+# Docker Details
+I am running the latest version of caddy as a docker file, based on the image `slothcroissant/caddy-cloudflaredns:latest`. As of writing, this is `2.9.1`. I've included a sample of my docker-compose file as well in case it helps anyone. 
