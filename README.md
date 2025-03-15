@@ -1,2 +1,11 @@
 # caddy-ansible-playbook
-A simple ansible playbook and template to help maintain proxies
+This is a simple ansible playbook that will make it easy to manage your reverse proxies using Caddy. 
+
+While I understand there may be better solutions out there, or better reverse proxies, I've tried most of them and this setup is pretty much the only setup that works reliably for me, and is simple to setup. 
+
+# To Use
+Download the files to some folder on your server and modify the `proxies.yaml` and `users.yaml` file to fit your needs. The current `inventory.ini` is set to run against localhost, so if your Caddy reverse proxy is on another host, you'll have to modify the inventory accordingly. 
+
+You will also need to modify the `caddy-playbook.yaml` to change the variables near the top to fit your setup. 
+
+When you have everything set, you should be able to run it with `ansible-playbook -i inventory.ini caddy-playbook.yaml`
